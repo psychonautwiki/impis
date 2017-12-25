@@ -33,6 +33,11 @@ fn static_index() -> io::Result<NamedFile> {
     NamedFile::open("static/index.html")
 }
 
+#[get("/new")]
+fn static_new() -> io::Result<NamedFile> {
+    NamedFile::open("static/new.html")
+}
+
 #[get("/<file..>")]
 fn static_files(file: PathBuf) -> Option<NamedFile> {
     NamedFile::open(Path::new("static/").join(file)).ok()
@@ -40,15 +45,18 @@ fn static_files(file: PathBuf) -> Option<NamedFile> {
 
 #[derive(FromForm)]
 struct NewPost {
-   body: String
+   body: String,
+   title: String
 }
 
 #[post("/new", data = "<new_post_data>")]
 fn new_post(new_post_data: Form<NewPost>) -> Json<Value> {
     let body = &new_post_data.get().body;
+    let title = &new_post_data.get().title;
 
     Json(json!({
-        "body": body
+        "body": body,
+        "title": title
     }))
 }
 
@@ -64,6 +72,7 @@ fn main() {
     rocket::ignite()
         .mount("/", routes![
             static_index,
+            static_new,
             static_files,
             new_post
         ])

@@ -42,12 +42,31 @@
                 margin: 1em;
             }
         </style>
+        <script async src="js/marked.min.js"></script>
+        <script>
+            ;(function() {
+                window.onload = function () {
+                    var fpel = document.getElementsByName('body')[0];
+                    var fpelprev = document.getElementsByClassName('fprevpanel')[0];
+
+                    fpel.addEventListener('input', function () {
+                        fpelprev.innerHTML = marked(fpel.value);
+                    });
+
+                    fpel.addEventListener('keyup', function () {
+                        fpelprev.innerHTML = marked(fpel.value);
+                    });
+
+                    fpelprev.innerHTML = marked(fpel.value);
+                };
+            })();
+        </script>
     </head>
     <body>
-        <div class="title">
-            <input type="text" placeholder="Title of note" />
-        </div>
         <form method="POST" action="/new">
+            <div class="title">
+                <input type="text" name="title" placeholder="Title of note" />
+            </div>
             <div class='fprevset'>
                     <textarea autofocus name="body"></textarea>
                     <div class="fprevpanel"></div>

@@ -1,0 +1,37 @@
+version: '2'
+
+services:
+  anonium:
+    build: .
+    networks:
+      - viciousprince
+    restart: always
+    ulimits:
+      nproc: 65535
+      nofile:
+        soft: 800000
+        hard: 900000
+
+  mongo:
+    image: mongo:3.6.1
+    networks:
+      - viciousprince
+    volumes:
+      - ./data/mongo:/data/db
+    expose:
+      - 27017
+    restart: always
+    ulimits:
+      nproc: 65535
+      nofile:
+        soft: 800000
+        hard: 900000
+
+networks:
+  viciousprince:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.9.0.0/16
+          ip_range: 172.9.5.0/24
+          gateway: 172.9.5.254

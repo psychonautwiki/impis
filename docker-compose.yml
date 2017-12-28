@@ -5,6 +5,10 @@ services:
     build: .
     networks:
       - viciousprince
+    environment:
+      - ROCKET_ENV=prod
+      - ROCKET_PORT=80
+      - ROCKET_ADDRESS=0.0.0.0
     expose:
       - 80
     restart: always

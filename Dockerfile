@@ -1,4 +1,5 @@
-FROM psychonaut/rust-nightly:latest
+#FROM psychonaut/rust-nightly:latest
+FROM htli/rust-nightly:2017-12-16
 
 COPY . /my-source
 

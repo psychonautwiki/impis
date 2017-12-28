@@ -6,6 +6,7 @@ version = "0.1.0"
 [dependencies]
 bart = "0.1.4"
 bart_derive = "0.1.4"
+bs58 = { git = "https://github.com/KenanSulayman/bs58-rs.git", branch = "master" }
 bson = "0.10.0"
 lazy_static = "1.0.0"
 mongodb = "0.3.7"

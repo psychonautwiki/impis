@@ -10,6 +10,7 @@ extern crate time;
 extern crate rand;
 
 extern crate ring;
+extern crate bs58;
 
 #[macro_use(bson, doc)]
 extern crate bson;
@@ -18,31 +19,20 @@ extern crate mongodb;
 
 #[macro_use] extern crate bart_derive;
 
-use rocket::http::{Cookie, Cookies};
-
-use rand::Rng;
-
 #[cfg(test)] mod tests;
 
-use rocket::Outcome;
-use rocket::request::{self, Request, FromRequest, Form};
-
 use rocket::response::NamedFile;
-use rocket::response::content::{Html, JavaScript};
+use rocket::response::content::Html;
 
 use rocket_contrib::{Json, Value};
 
-use rocket::response::Redirect;
-
 use std::io;
 use std::path::{Path, PathBuf};
-use std::sync::{Arc, Mutex};
 
-use bson::Bson;
 use mongodb::{Client, ThreadedClient};
 use mongodb::db::ThreadedDatabase;
 
-use ring::{digest, test};
+use ring::digest;
 
 #[get("/")]
 fn static_index() -> io::Result<NamedFile> {
@@ -72,17 +62,6 @@ struct NewPost {
    title: String
 }
 
-struct ByteBuf<'a>(&'a [u8]);
-
-impl<'a> std::fmt::LowerHex for ByteBuf<'a> {
-    fn fmt(&self, fmtr: &mut std::fmt::Formatter) -> Result<(), std::fmt::Error> {
-        for byte in self.0 {
-            try!( fmtr.write_fmt(format_args!("{:02x}", byte)));
-        }
-        Ok(())
-    }
-}
-
 // returns (hash, bool: was created?)
 fn create_post(post: &NewPost) -> (String, bool) {
     let ref title = post.title;
@@ -95,7 +74,7 @@ fn create_post(post: &NewPost) -> (String, bool) {
 
     let hash = digest::digest(&digest::SHA256, body.as_bytes());
 
-    let ref hash_str = format!("{:x}", ByteBuf(hash.as_ref()));
+    let ref hash_str = bs58::encode(hash.as_ref()).into_string();
 
     match coll.find_one(Some(doc! { "hash": hash_str }), None) {
         Ok(Some(_)) => {
@@ -115,17 +94,6 @@ fn create_post(post: &NewPost) -> (String, bool) {
             (hash_str.to_string(), true)
         }
     }
-}
-
-#[post("/new", data = "<new_post_data>")]
-fn new_post(new_post_data: Form<NewPost>) -> Redirect {
-    let ref post_data = new_post_data.get();
-
-    let (hash_str, _) = create_post(post_data);
-
-    return Redirect::temporary(
-        &format!("/n/{}", hash_str)
-    );
 }
 
 #[post("/new-async", data = "<new_post_data>")]
@@ -184,7 +152,6 @@ fn main() {
             static_index,
             static_new,
             static_files,
-            new_post,
             new_post_async
         ])
         .catch(errors![not_found])

@@ -10,43 +10,8 @@
 
             html, body { background-color: #020E17; }
 
-            .fprevset {
-                display: flex;
-                height: 80%;
-            }
-
-            .fprevset div.fprevpanel {
-                flex: 1 0;
-            }
-
-            textarea, .fprevset div.fprevpanel {
-                background-color: #022d4c;
-                margin: 0.1em;
-                padding: 1em;
-
-                border-radius: 0;
-            }
-
-            .title { text-align:center; padding: 2em 0 1em 0; }
-            .title input {
-                background-color: #020E17;
-                border: 0;
-                color: #b0b0b0;
-                font-size: 28px;
+            header {
                 text-align: center;
-            }
-
-            #hero img { max-width: 100px; }
-
-            fieldset {
-                margin: 1em;
-            }
-
-            .status {
-                display: none;
-
-                background-color: #022d4c;
-                padding: 0.5em 1em;
             }
         </style>
         <script src="/js/buffer.js"></script>
@@ -61,48 +26,6 @@
                     var eltitle = document.getElementsByName('title')[0];
                     var elbody = document.getElementsByName('body')[0];
 
-                    window.eltitle = eltitle;
-                    window.elbody = elbody;
-
-                    // preview
-                        var fpel = document.getElementsByName('body')[0];
-                        var fpelprev = document.getElementsByClassName('fprevpanel')[0];
-
-                        fpel.addEventListener('input', function () {
-                            fpelprev.innerHTML = marked(fpel.value);
-                        });
-
-                        fpel.addEventListener('keyup', function () {
-                            fpelprev.innerHTML = marked(fpel.value);
-                        });
-
-                        fpelprev.innerHTML = marked(fpel.value);
-                    
-                    // status
-                        var statusel = document.getElementsByClassName('status')[0];
-
-                        var setStatus = function (status) {
-                            if (status) {
-                                statusel.style.display = 'inline';
-                                statusel.innerText = status;
-                            } else {
-                                statusel.style.display = 'none';
-                            }
-                        };
-
-                        window.setStatus = setStatus;
-
-                    /*
-                        SUBMIT
-
-                        Q = RNG(64 chars)
-
-                        KEY = H(RNG[0..31])
-                        IV = H(RNG(KEY)[15..31])
-
-                        C = AESCTR(KEY, IV, PL)
-                    */
-                    
                     class AnoniumX {
                         constructor () {
                             this._key = null;
@@ -137,6 +60,8 @@
                                 if (key) {
                                     return cb(null, key);
                                 }
+                                
+                                console.log(progress);
                             });
                         }
 
@@ -144,6 +69,7 @@
                             this._scrypt_derive_inkey((err, key_raw) => {
                                 if (err) {
                                     console.log(err);
+                                    // todo log err
                                 }
 
                                 var keyd = new buffer.Buffer(key_raw);
@@ -169,7 +95,7 @@
 
                         _pad_32(buf, type) {
                             const outbuf = new buffer.Buffer(Math.ceil(buf.length / 32) * 32);
-                            outbuf.write(buf, type);
+                            outbuf.write(buf);
 
                             return outbuf;
                         }
@@ -183,73 +109,31 @@
                         }
                     }
 
-                    document.getElementById('publish-button').onclick = () => {
-                        const anon = new AnoniumX();
+                    const pass = location.hash.slice(1);
 
-                        anon._generate_pass();
-
-                        anon._generate_key_iv(() => {
-                            const enctitle = buffer.Buffer(anon.encrypt(anon._pad_32(eltitle.value))).toString("hex");
-                            const encbody = buffer.Buffer(anon.encrypt(anon._pad_32(elbody.value))).toString("hex");
-
-                            debugger;
-
-                            const xhr = new window['XMLHttpRequest']();
-
-                            xhr['open']("POST", '/new-async', true);
-
-                            xhr['setRequestHeader']('Content-Type', 'application/json');
-
-                            xhr['onreadystatechange'] = () => {
-                                if (xhr.readyState == 4) {
-                                    if (xhr.status !== 200) {
-                                        return void 0;
-                                    }
-
-                                    try {
-                                        const resp = JSON.parse(xhr.responseText);
-
-                                        debugger;
-
-                                        window.location.replace(
-                                            `/n/${resp.hash}#${anon._pass}`
-                                        );
-                                    } catch(err) {
-                                        console.log(err);
-                                    }
-                                }
-                            };
-
-                            xhr['onerror'] = console.log;
-
-                            xhr['send'](window['JSON']['stringify']({
-                                "title": enctitle,
-                                "body": encbody
-                            }));
-                        });
+                    if (pass === '') {
+                        eltitle.innerText = 'Error';
+                        elbody.innerText = 'No key given';
                     }
-                };
+
+                    const anon = new AnoniumX();
+
+                    anon._pass = pass;
+
+                    anon._generate_key_iv(() => {
+                        console.log(anon);
+                        debugger;
+
+                        eltitle.innerText = buffer.Buffer(anon.decrypt(anon._pad_32(eltitle.innerText.trim(), 'hex'))).toString();
+                        elbody.innerHTML = buffer.Buffer(anon.decrypt(anon._pad_32(elbody.innerText.trim(), 'hex'))).toString();
+                    });
+                }
             })();
         </script>
     </head>
     <body>
-        <form onsubmit="return false;" class="elform">
-            <div class="title">
-                <input type="text" name="title" placeholder="Title of note" required />
-            </div>
-            <div class='fprevset'>
-                    <textarea autofocus name="body" required></textarea>
-                    <div class="fprevpanel"></div>
-            </div>
-            <fieldset>
-                <button class="button ui-elem publish-button" id="publish-button" type="submit">
-                        Publish Note
-                </button>
-                <span class="status">
-                        Yolo
-                </span>
-            </fieldset>
-        </form>
+        <header name='title'><h1>{{.title}}</h1></header>
+        <article name='body'>{{.body}}</article>
         <footer>
             <a href="/TOS.md">terms of service</a>
         </footer>

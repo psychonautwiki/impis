@@ -6,12 +6,17 @@
         <meta charset="UTF-8">
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <style>
-            body{display:flex;flex-direction:column;min-height:100vh;}html,body{font-family:sans-serif;padding:0;margin:0;color:#b0b0b0;background:#353a3a;}#hero{text-align:center;padding-bottom:5em;padding-top:5em;}.ui-border{border-radius:3px;border:1px solid #333;}a{border-bottom:1px dotted;text-decoration:none;color:#097;}a:hover{color:#0a8;}a:visited{color:#086;}.button{cursor:pointer;}.ui-elem{background:#fff;font-size:1em;opacity:0.8;padding:0.3em;border-radius:3px;font-weight:300;border:1px solid #333;}.landing-button{line-height:200%;display:inline-block;width:10em;white-space:nowrap;border-radius:3px;border:none;margin:0.5em;background:#0a6;font-size:1.5em;text-decoration:none;font-weight:300;}.landing-button.demo{opacity:0.9;background:#ddd;color:black!important;}.landing-button:hover{background:#0b7;}.landing-button.demo:hover{background:#eee;}footer{text-align:center;padding-bottom:1em;font-size:0.8em;width:100%;font-weight:300;}footer a{border:none;}h1,h2,h3,h4,h5,h6{font-weight:400;}h1{font-size:1.8em;}h2{font-size:1.6em;}h3{font-size:1.4em;}h4{font-size:1.2em;}h5{font-size:1.1em;}h6{font-size:1.0em;}#hero h1{font-size:2.5em;}#hero h2{margin:2em;font-weight:300;}#dashed-line{border-bottom:1px dashed#888;}article{text-align:justify;font-weight:300;margin-top:3em;margin-bottom:5em;margin-right:auto;margin-left:auto;}article img{max-width:100%;}article p{line-height:160%;font-size:1.05em;}article>h1:first-child{margin:2em;font-size:2.0em;text-align:center;}.central-element{margin-right:auto;margin-left:auto;}strong{font-weight:600;}em,blockquote{font-family:Georgia,Palatino,"Palatino Linotype",serif;}blockquote{padding-left:1em;border-left:4px solid #097;}.centered{text-align:center;}.bottom-space{margin-bottom:7em;}*:focus{outline:0px none transparent;}pre,code{white-space:pre-wrap;font-family:monospace;border-radius:3px;background-color:#303535;}pre{padding:1em;}table{border-collapse:collapse;width:100%;}th{background-color:#303535;line-height:2.5em;padding:0.3em;}td{line-height:2.5em;padding:0.3em;border-top:1px solid #404545;}.middot{padding:0.5em;}@media screen and (min-width: 1024px) {article,.central-element{width:800px;}#dashed-line{margin-bottom:3em;margin-top:3em;}}@media screen and (max-width: 1023px) {article,.central-element{width:90%;}#dashed-line{margin-bottom:0.5em;margin-top:0.5em;}}textarea{background-color:#303535;font-size:1.2em;color:#b0b0b0;border-radius:5px;flex:1 0;margin:3em;padding:2em;}textarea,fieldset{border:none;}fieldset{margin-left:3em;margin-right:3em;margin-bottom:3em;}form{display:flex;flex:1 0;flex-direction:column;}#captcha{display:none;}li{margin:0.3em 0;}#feedback{margin-left:1em;color:#f66;}
+            body{display:flex;flex-direction:column;min-height:100vh;}html,body{font-family:sans-serif;padding:0;margin:0;color:#b0b0b0;background:#353a3a;}#hero{text-align:center;padding-bottom:5em;padding-top:5em;}.ui-border{border-radius:3px;border:1px solid #333;}a{border-bottom:1px dotted;text-decoration:none;color:#097;}a:hover{color:#0a8;}a:visited{color:#086;}.button{cursor:pointer;}.ui-elem{background:#fff;font-size:1em;opacity:0.8;padding:0.3em;border-radius:3px;font-weight:300;border:1px solid #333;}.landing-button{line-height:200%;display:inline-block;width:10em;white-space:nowrap;border-radius:3px;border:none;margin:0.5em;background:#0a6;font-size:1.5em;text-decoration:none;font-weight:300;}.landing-button.demo{opacity:0.9;background:#ddd;color:black!important;}.landing-button:hover{background:#0b7;}.landing-button.demo:hover{background:#eee;}footer{text-align:center;padding-bottom:1em;font-size:0.8em;width:100%;font-weight:300;}footer a{border:none;}h1,h2,h3,h4,h5,h6{font-weight:400;}h1{font-size:1.8em;}h2{font-size:1.6em;}h3{font-size:1.4em;}h4{font-size:1.2em;}h5{font-size:1.1em;}h6{font-size:1.0em;}#hero h1{font-size:2.5em;}#hero h2{margin:2em;font-weight:300;}#dashed-line{border-bottom:1px dashed#888;}article{text-align:justify;font-weight:300;margin-top:1em;margin-bottom:5em;margin-right:auto;margin-left:auto;}article img{max-width:100%;}article p{line-height:160%;font-size:1.05em;}article>h1:first-child{margin:2em;font-size:2.0em;text-align:center;}.central-element{margin-right:auto;margin-left:auto;}strong{font-weight:600;}em,blockquote{font-family:Georgia,Palatino,"Palatino Linotype",serif;}blockquote{padding-left:1em;border-left:4px solid #097;}.centered{text-align:center;}.bottom-space{margin-bottom:7em;}*:focus{outline:0px none transparent;}pre,code{white-space:pre-wrap;font-family:monospace;border-radius:3px;background-color:#303535;}pre{padding:1em;}table{border-collapse:collapse;width:100%;}th{background-color:#303535;line-height:2.5em;padding:0.3em;}td{line-height:2.5em;padding:0.3em;border-top:1px solid #404545;}.middot{padding:0.5em;}@media screen and (min-width: 1024px) {article,.central-element{width:800px;}#dashed-line{margin-bottom:3em;margin-top:3em;}}@media screen and (max-width: 1023px) {article,.central-element{width:90%;}#dashed-line{margin-bottom:0.5em;margin-top:0.5em;}}textarea{background-color:#303535;font-size:1.2em;color:#b0b0b0;border-radius:5px;flex:1 0;margin:3em;padding:2em;}textarea,fieldset{border:none;}fieldset{margin-left:3em;margin-right:3em;margin-bottom:3em;}form{display:flex;flex:1 0;flex-direction:column;}#captcha{display:none;}li{margin:0.3em 0;}#feedback{margin-left:1em;color:#f66;}
 
             html, body { background-color: #020E17; }
 
-            header {
-                text-align: center;
+            .title, .body {
+                display: none;
+            }
+
+            .title {
+                margin: 1em;
+                font-size: 18px;
             }
         </style>
         <script src="/js/buffer.js"></script>
@@ -23,8 +28,8 @@
         <script>
             ;(function() {
                 window.onload = function () {
-                    var eltitle = document.getElementsByName('title')[0];
-                    var elbody = document.getElementsByName('body')[0];
+                    var eltitle = document.getElementsByClassName('title')[0];
+                    var elbody = document.getElementsByClassName('body')[0];
 
                     class AnoniumX {
                         constructor () {
@@ -114,6 +119,8 @@
                     if (pass === '') {
                         eltitle.innerText = 'Error';
                         elbody.innerText = 'No key given';
+
+                        return;
                     }
 
                     const anon = new AnoniumX();
@@ -121,19 +128,25 @@
                     anon._pass = pass;
 
                     anon._generate_key_iv(() => {
-                        console.log(anon);
-                        debugger;
+                        const title_buf = anon.decrypt(buffer.Buffer(eltitle.innerText.trim(), 'hex'));
+                        const title = String.fromCharCode.apply(String, title_buf);
 
-                        eltitle.innerText = buffer.Buffer(anon.decrypt(anon._pad_32(eltitle.innerText.trim(), 'hex'))).toString();
-                        elbody.innerHTML = buffer.Buffer(anon.decrypt(anon._pad_32(elbody.innerText.trim(), 'hex'))).toString();
+                        const body_buf = anon.decrypt(buffer.Buffer(elbody.innerText.trim(), 'hex'));
+                        const body = String.fromCharCode.apply(String, body_buf);
+
+                        eltitle.innerText = title;
+                        elbody.innerHTML = marked(body);
+
+                        eltitle.style.display = 'block';
+                        elbody.style.display = 'block';
                     });
                 }
             })();
         </script>
     </head>
     <body>
-        <header name='title'><h1>{{.title}}</h1></header>
-        <article name='body'>{{.body}}</article>
+        <header class='title'><h1>{{.title}}</h1></header>
+        <article class='body'>{{.body}}</article>
         <footer>
             <a href="/TOS.md">terms of service</a>
         </footer>

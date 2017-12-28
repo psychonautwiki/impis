@@ -17,7 +17,7 @@ services:
   flyio-anonium:
     image: flyio/wormhole:0.5.36
     networks:
-      - void
+      - viciousprince
     environment:
       - FLY_TOKEN=REDACTED
       - FLY_LOCAL_ENDPOINT=anonium:80

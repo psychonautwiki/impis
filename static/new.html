@@ -61,9 +61,6 @@
                     var eltitle = document.getElementsByName('title')[0];
                     var elbody = document.getElementsByName('body')[0];
 
-                    window.eltitle = eltitle;
-                    window.elbody = elbody;
-
                     // preview
                         var fpel = document.getElementsByName('body')[0];
                         var fpelprev = document.getElementsByClassName('fprevpanel')[0];
@@ -192,8 +189,6 @@
                             const enctitle = buffer.Buffer(anon.encrypt(anon._pad_32(eltitle.value))).toString("hex");
                             const encbody = buffer.Buffer(anon.encrypt(anon._pad_32(elbody.value))).toString("hex");
 
-                            debugger;
-
                             const xhr = new window['XMLHttpRequest']();
 
                             xhr['open']("POST", '/new-async', true);
@@ -209,8 +204,6 @@
                                     try {
                                         const resp = JSON.parse(xhr.responseText);
 
-                                        debugger;
-
                                         window.location.replace(
                                             `/n/${resp.hash}#${anon._pass}`
                                         );
@@ -220,7 +213,7 @@
                                 }
                             };
 
-                            xhr['onerror'] = console.log;
+                            xhr['onerror'] = () => {};
 
                             xhr['send'](window['JSON']['stringify']({
                                 "title": enctitle,

@@ -88,7 +88,7 @@ fn create_post(post: &NewPost) -> (String, bool) {
     let ref title = post.title;
     let ref body = post.body;
 
-    let client = Client::connect("localhost", 27017)
+    let client = Client::connect("mongo", 27017)
         .expect("Failed to initialize standalone client.");
     
     let coll = client.db("anonium").collection("posts");
@@ -142,7 +142,7 @@ fn new_post_async(new_post_data: Json<NewPost>) -> Json<Value> {
 
 #[get("/n/<hash>")]
 fn post_page(hash: String) -> Html<String> {
-    let client = Client::connect("localhost", 27017)
+    let client = Client::connect("mongo", 27017)
         .expect("Failed to initialize standalone client.");
     
     let coll = client.db("anonium").collection("posts");

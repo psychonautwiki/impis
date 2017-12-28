@@ -5,6 +5,22 @@ services:
     build: .
     networks:
       - viciousprince
+    expose:
+      - 80
+    restart: always
+    ulimits:
+      nproc: 65535
+      nofile:
+        soft: 800000
+        hard: 900000
+
+  flyio-anonium:
+    image: flyio/wormhole:0.5.36
+    networks:
+      - void
+    environment:
+      - FLY_TOKEN=REDACTED
+      - FLY_LOCAL_ENDPOINT=anonium:80
     restart: always
     ulimits:
       nproc: 65535

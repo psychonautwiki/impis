@@ -12,11 +12,19 @@
 
             .fprevset {
                 display: flex;
-                height: 80%;
+
+                min-height: 300px;
             }
 
             .fprevset div.fprevpanel {
                 flex: 1 0;
+
+                background-color: #022d4c88;
+                opacity: 0.7;
+            }
+
+            .fprevset textarea {
+                color: #ffffffdd;
             }
 
             textarea, .fprevset div.fprevpanel {
@@ -49,11 +57,7 @@
                 padding: 0.5em 1em;
             }
         </style>
-        <script src="/js/buffer.js"></script>
-        <script src="/js/setImmediate.js"></script>
-        <script src="/js/scrypt.js"></script>
-        <script src="/js/asmcrypto.min.js"></script>
-        <script src="/js/marked.min.js"></script>
+        <script src="/js/bundle.min.js"></script>
         <script>
             ;(function() {
                 window.onload = function () {
@@ -239,7 +243,43 @@
                 <input type="text" name="title" placeholder="Title of note" required />
             </div>
             <div class='fprevset'>
-                    <textarea autofocus name="body" required></textarea>
+<textarea autofocus name="body" required>
+# Demo Note
+
+## Text Formatting
+
+This is a _short_ note demonstrating the **capabilities** of Markdown.
+
+[Markdown](http://en.wikipedia.org/wiki/Markdown) is a _markup language_ with plain text
+formatting syntax.
+
+But you also can use <u>standard HTML</u> tags.
+
+## Blockquotes, Lists & Code
+
+This is a blockquote:
+
+> _"The evolution of humankind lies in the alteration of consciousness."_  
+> — Albert Hofmann
+
+To create simple lists, just enumerate all items using a dash in the prefix:
+
+- Alpha
+- Beta
+
+Also you can either mark some special `words` or write entire `code` blocks:
+
+    const resp = 123;
+
+## Tables
+
+Also simple tables is a piece of cake:
+
+Column 1     | Column 2    | Column 3
+---          | ---         | ---
+Text 1       | Text 3      | <s>Text 5</s>
+Text 2       | Text 4      | <mark>Text 6</mark>
+</textarea>
                     <div class="fprevpanel"></div>
             </div>
             <fieldset>
@@ -252,7 +292,7 @@
             </fieldset>
         </form>
         <footer>
-            <a href="/TOS.md">terms of service</a>
+            <a href="/new">new note</a>
         </footer>
     </body>
 </html>

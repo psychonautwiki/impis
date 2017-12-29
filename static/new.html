@@ -50,7 +50,6 @@
             }
         </style>
         <script src="/js/buffer.js"></script>
-        <script src="/js/unorm.js"></script>
         <script src="/js/setImmediate.js"></script>
         <script src="/js/scrypt.js"></script>
         <script src="/js/asmcrypto.min.js"></script>
@@ -99,6 +98,15 @@
 
                         C = AESCTR(KEY, IV, PL)
                     */
+
+                    const b58 = (() => {
+                        const chars = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
+
+                        return {
+                            to: function(B){var d=[],s="",i,j,c,n;for(i in B){j=0,c=B[i];s+=c||s.length^i?"":1;while(j in d||c){n=d[j];n=n?n*256+c:c;c=n/58|0;d[j]=n%58;j++}}while(j--)s+=chars[d[j]];return s},
+                            from: function(S){var d=[],b=[],i,j,c,n;for(i in S){j=0,c=chars.indexOf(S[i]);if(c<0)return undefined;c||b.length^i?i:b.push(0);while(j in d||c){n=d[j];n=n?n*58+c:c;c=n>>8;d[j]=n%256;j++}}while(j--)b.push(d[j]);return new Uint8Array(b)}
+                        }
+                    })();
                     
                     class AnoniumX {
                         constructor () {
@@ -116,12 +124,12 @@
                                 xrand.push(Math.ceil(Math.random() * 255));
                             }
 
-                            this._pass = new buffer.Buffer(xrand).toString("hex");
+                            this._pass = b58.to(xrand);
                         }
 
                         _scrypt_derive_inkey(cb) {
-                            var password = new buffer.SlowBuffer(this._pass.normalize('NFKC'));
-                            var salt = new buffer.SlowBuffer(this._static_salt.normalize('NFKC'));
+                            var password = new buffer.SlowBuffer(this._pass);
+                            var salt = new buffer.SlowBuffer(this._static_salt);
 
                             var N = 1024, r = 8, p = 1;
                             var dkLen = 32;

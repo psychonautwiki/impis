@@ -44,7 +44,7 @@ fn static_new() -> io::Result<NamedFile> {
     NamedFile::open("core/dist/new.html")
 }
 
-#[get("/<file..>")]
+#[get("/js/<file..>")]
 fn static_files(file: PathBuf) -> Option<NamedFile> {
     NamedFile::open(Path::new("core/dist/").join(file)).ok()
 }

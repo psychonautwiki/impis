@@ -1,0 +1,24 @@
+[package]
+authors = ["Kenan Sulayman <kenan@sly.mn>"]
+name = "foo"
+version = "0.1.0"
+
+[dependencies]
+bs58 = "0.2.0"
+hex = "0.3.2"
+rust-crypto-wasm = "0.3.1"
+wasm-bindgen = "0.2.11"
+
+[dependencies.memchr]
+default-features = false
+version = "^2.0"
+
+[lib]
+crate-type = ["cdylib"]
+
+[profile]
+
+[profile.release]
+lto = true
+opt-level = "s"
+panic = "abort"

@@ -36,21 +36,21 @@ use ring::digest;
 
 #[get("/")]
 fn static_index() -> io::Result<NamedFile> {
-    NamedFile::open("static/index.html")
+    NamedFile::open("core/dist/index.html")
 }
 
 #[get("/new")]
 fn static_new() -> io::Result<NamedFile> {
-    NamedFile::open("static/new.html")
+    NamedFile::open("core/dist/new.html")
 }
 
-#[get("/js/<file..>")]
+#[get("/<file..>")]
 fn static_files(file: PathBuf) -> Option<NamedFile> {
-    NamedFile::open(Path::new("static/js/").join(file)).ok()
+    NamedFile::open(Path::new("core/dist/").join(file)).ok()
 }
 
 #[derive(BartDisplay)]
-#[template = "templates/post.html"]
+#[template = "core/dist/note.html"]
 struct PostPage {
     title: String,
     body: String

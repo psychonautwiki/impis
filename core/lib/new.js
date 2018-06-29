@@ -3,7 +3,7 @@ require('../out/foo');
 const marked = require('./marked');
 
 const loader = cb => {
-    self.wasm_bindgen('./main.wasm').then(() => cb(self.wasm_bindgen));
+    self.wasm_bindgen('/js/main.wasm').then(() => cb(self.wasm_bindgen));
 }
 
 window.onload = function () {
